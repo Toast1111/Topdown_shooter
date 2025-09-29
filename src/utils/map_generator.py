@@ -201,8 +201,14 @@ class MapGenerator:
             # Make sure buildings don't overlap too much
             overlaps = False
             for obstacle in game_map.obstacles:
-                if (abs(obstacle.x - x) < (obstacle.width + width) / 2 and
-                    abs(obstacle.y - y) < (obstacle.height + height) / 2):
+                # Calculate centers
+                center_x1 = obstacle.x + obstacle.width / 2
+                center_y1 = obstacle.y + obstacle.height / 2
+                center_x2 = x + width / 2
+                center_y2 = y + height / 2
+                # Check overlap using center distances and sum of half-widths/heights
+                if (abs(center_x1 - center_x2) < (obstacle.width / 2 + width / 2) and
+                    abs(center_y1 - center_y2) < (obstacle.height / 2 + height / 2)):
                     overlaps = True
                     break
             
